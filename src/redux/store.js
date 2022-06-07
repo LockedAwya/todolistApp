@@ -3,9 +3,10 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk'
-import counterReducer from './counter'
-import loginInfoReducer from './loginInfo'
-import queryReducer from './query'
+// import counterReducer from './counter'
+// import loginInfoReducer from './loginInfo'
+// import queryReducer from './query'
+import taskListReducer from './taskList'
 
 //create a local storage
 const persistConfig = {
@@ -14,9 +15,10 @@ const persistConfig = {
 }
 
 const allReducers = combineReducers({
-  counter: counterReducer,
-  loginInfo: loginInfoReducer,
-  query: queryReducer,
+  // counter: counterReducer,
+  // loginInfo: loginInfoReducer,
+  // query: queryReducer,
+  taskList: taskListReducer,
 })
 
 export const persistedReducer = persistReducer(persistConfig, allReducers);

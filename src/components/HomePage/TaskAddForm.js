@@ -1,3 +1,7 @@
+import { addTask } from '../../redux/taskList'
+import { useSelector, useDispatch } from "react-redux";
+import {addTaskToList, removeTaskFromList} from '../../redux/taskList'
+
 function TaskAddForm(props) {
   const addTaskChange = props.addTaskChange
   const addTask = props.addTask
@@ -27,7 +31,7 @@ function TaskAddForm(props) {
       </input>
       <br></br>
       <button
-        onClick={(e) => addTask(e)}
+        onClick={addTask}
       >
         Submit task
       </button>
