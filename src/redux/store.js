@@ -7,11 +7,15 @@ import thunk from 'redux-thunk'
 // import loginInfoReducer from './loginInfo'
 // import queryReducer from './query'
 import taskListReducer from './taskList'
+import tasksCompletedListReducer from './tasksCompletedList';
+import SetTransform from './setTransform';
+
 
 //create a local storage
 const persistConfig = {
   key: 'main-root',
   storage,
+  transforms: [SetTransform]
 }
 
 const allReducers = combineReducers({
@@ -19,6 +23,7 @@ const allReducers = combineReducers({
   // loginInfo: loginInfoReducer,
   // query: queryReducer,
   taskList: taskListReducer,
+  tasksCompletedList: tasksCompletedListReducer,
 })
 
 export const persistedReducer = persistReducer(persistConfig, allReducers);

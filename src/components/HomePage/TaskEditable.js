@@ -13,7 +13,7 @@ function TaskEditable(props) {
   }, [])
 
   return (
-    <div style={{ "float": "left" }}>
+    <div className="border border-primary" md={{ span: 1, offset: 1 }}>
       <label for="taskName">Task name:</label>
       <input
         type="text"

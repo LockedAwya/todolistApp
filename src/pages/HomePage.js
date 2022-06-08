@@ -5,9 +5,12 @@ import { useState, Fragment, useEffect } from 'react';
 import { nanoid } from "nanoid";
 import { useSelector, useDispatch } from "react-redux";
 import { addTaskToList, removeTaskFromList } from '../redux/taskList'
+import { addTask, removeTask } from '../redux/tasksCompletedList'
+import TaskCompleted from '../components/HomePage/TaskCompleted';
 
 function HomePage() {
   const tasks = useSelector((state) => state.taskList.items)
+  const completedTasks = useSelector((state) => state.tasksCompletedList.items2)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -26,28 +29,28 @@ function HomePage() {
     taskCompleted: addFormTask.taskCompleted,
   });
   const [isEditID, setIsEditID] = useState(null);
-  function addTask(e) {
-    console.log("addTask");
-    e.preventDefault();
-    dispatch({
-      id: nanoid(),
-      taskName: addFormTask.taskName,
-      taskDescription: addFormTask.taskDescription,
-      taskCompleted: addFormTask.taskCompleted,
-    })
+  // function addTask(e) {
+  //   console.log("addTask");
+  //   e.preventDefault();
+  //   dispatch({
+  //     id: nanoid(),
+  //     taskName: addFormTask.taskName,
+  //     taskDescription: addFormTask.taskDescription,
+  //     taskCompleted: addFormTask.taskCompleted,
+  //   })
 
-    alert("Tasks are: " + JSON.stringify(tasks));
-    // const newTask = {
-    //   id: nanoid(),
-    //   taskName: addFormTask.taskName,
-    //   taskDescription: addFormTask.taskDescription,
-    //   taskCompleted: addFormTask.taskCompleted,
-    // }
-    // const newTasks = [...tasks, newTask];
-    // setTasks(newTasks);
-    // alert("New task added with name: " + newTask.taskName + " with task status is: " + newTask.taskCompleted)
+  //   alert("Tasks are: " + JSON.stringify(tasks));
+  //   // const newTask = {
+  //   //   id: nanoid(),
+  //   //   taskName: addFormTask.taskName,
+  //   //   taskDescription: addFormTask.taskDescription,
+  //   //   taskCompleted: addFormTask.taskCompleted,
+  //   // }
+  //   // const newTasks = [...tasks, newTask];
+  //   // setTasks(newTasks);
+  //   // alert("New task added with name: " + newTask.taskName + " with task status is: " + newTask.taskCompleted)
 
-  }
+  // }
   //onchange
   function addTaskChange(e) {
     console.log("addTaskChange");
@@ -62,25 +65,17 @@ function HomePage() {
   //later
   function isDone(e, task) {
     alert("Task selected is: " + JSON.stringify(task))
-    task.taskCompleted = !task.taskCompleted
+    if (task.taskCompleted === true) {
+      task.taskCompleted = false;
+    } else {
+      task.taskCompleted = true;
+    }
+    //tasksCompletedList.push(task)
+    //task.taskCompleted = !task.taskCompleted
   }
 
   //later
   function editTask(e, task) {
-    // console.log("The index is: " + index)
-    // if (tasks[index].taskCompleted === false) {
-    //   console.log('editTask');
-    //   e.preventDefault();
-    //   setIsEditID(tasks[index].id);
-    //   const formValues = {
-    //     taskName: tasks[index].taskName,
-    //     taskDescription: tasks[index].taskDescription,
-    //     taskCompleted: tasks[index].taskCompleted,
-    //   }
-    //   setEditFormTask(formValues);
-    // } else {
-    //   alert("Cannot change task!!!");
-    // }
     if (task.taskCompleted === false) {
       alert('editTask');
       e.preventDefault();
@@ -142,6 +137,21 @@ function HomePage() {
     setIsEditID(null);
   }
 
+  function markTaskDone(e, task, index) {
+    e.preventDefault();
+    console.log(JSON.stringify(task))
+    dispatch(removeTaskFromList({
+      index: index,
+    }))
+    dispatch(addTask({
+      id: task.id,
+      taskName: task.taskName,
+      taskDescription: task.taskDescription,
+      taskCompleted: task.taskCompleted,
+    }))
+    //completedTasks.push(task);
+  }
+
   var taskList =
     tasks.map((task, index) => {
       return (
@@ -165,6 +175,7 @@ function HomePage() {
                 index={index}
                 isDone={(e) => isDone(e, task)}
                 editTask={(e) => editTask(e, task)}
+                markTaskDone={(e) => markTaskDone(e, task, index)}
               />
             )
           }
@@ -173,9 +184,27 @@ function HomePage() {
     }
     )
 
+  var completedTasksList =
+    completedTasks.map((task, index) => {
+      return (
+        <Fragment>
+          {
+            <TaskCompleted
+              task={task}
+              index={index}
+              deleteTask={() => dispatch(removeTask({
+                index: index,
+              }))}
+            />
+          }
+        </Fragment>
+      )
+    }
+    )
+
   return (
     <div>
-      <div style={{ "float": "left" }}>
+      <div>
         <h1>Writing Task</h1>
         <TaskAddForm
           addTaskChange={addTaskChange}
@@ -188,16 +217,20 @@ function HomePage() {
         //className="grid place-items-center h-screen"
         />
         <br />
-        {
-          taskList
-        }
+        <div style={{ display: "flex;", 'flex-flow': 'row wrap;' }}>
+          <div style={{ 'text-align': "left" }}>
+            {
+              taskList
+            }
+          </div>
+          <div style={{ 'text-align': "right" }}>
+            <h1>Completed tasks</h1>
+            {
+              completedTasksList
+            }
+          </div>
+        </div>
       </div>
-      {/* <div style={{ "float": "right" }}>
-        <h1>Tasks Completed</h1>
-        {
-          completedTaskList
-        }
-      </div> */}
     </div>
   );
 }

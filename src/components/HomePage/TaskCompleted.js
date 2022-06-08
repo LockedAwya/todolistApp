@@ -1,18 +1,24 @@
+import Col from 'react-bootstrap/Col';
 
 function TaskCompleted(props) {
-  const tasks = props.tasks;
+  const task = props.task;
   const deleteTask = props.deleteTask;
   const index = props.index
 
   return (
-    <div style={{ "float": "left" }}>
-      <h1>{tasks[index].taskName}</h1>
-      <p>
-        {tasks[index].taskDescription}
-      </p>
-      <br />
-      <button onClick={(e) => deleteTask(e, index)}>Delete Task</button>
-      <br />
+    <div>
+      <Col className="border border-primary" md={{ span: -3, offset: 3 }}>
+        <h1>{task.taskName}</h1>
+        <p>
+          {task.taskDescription}
+        </p>
+        <br />
+        <button onClick={(e) => deleteTask(e, index)}>Delete Task</button>
+        <br />
+        {/* <div id="example-collapse-text">
+          fasdfasdf
+        </div> */}
+      </Col>
     </div>
   );
 }
