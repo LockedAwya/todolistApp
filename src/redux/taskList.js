@@ -9,6 +9,12 @@ export const taskListSlice = createSlice({
   },
   //initialState,
   reducers: {
+    updateTask: (state, action) => {
+      // let newTasks = state.items
+      // newTasks.push(action.payload)
+      // state.items = newTasks;
+      state.items[action.payload.index] = action.payload.newData
+    },
     addTaskToList: (state, action) => {
       let newTasks = state.items
       newTasks.push(action.payload)
@@ -23,6 +29,6 @@ export const taskListSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addTaskToList, removeTaskFromList } = taskListSlice.actions
+export const { addTaskToList, removeTaskFromList, updateTask } = taskListSlice.actions
 
 export default taskListSlice.reducer

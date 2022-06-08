@@ -4,7 +4,7 @@ import TaskAddForm from '../components/HomePage/TaskAddForm'
 import { useState, Fragment, useEffect } from 'react';
 import { nanoid } from "nanoid";
 import { useSelector, useDispatch } from "react-redux";
-import { addTaskToList, removeTaskFromList } from '../redux/taskList'
+import { updateTask, addTaskToList, removeTaskFromList } from '../redux/taskList'
 import { addTask, removeTask } from '../redux/tasksCompletedList'
 import TaskCompleted from '../components/HomePage/TaskCompleted';
 import { CssBaseline, Typography } from '@mui/material';
@@ -65,7 +65,6 @@ function HomePage() {
   //later
   function editTask(e, task) {
     if (task.taskCompleted === false) {
-      alert('editTask');
       e.preventDefault();
       setIsEditID(task.id);
       const editForm = {
@@ -104,10 +103,15 @@ function HomePage() {
       taskCompleted: editFormTask.taskCompleted,
     }
 
-    alert("Edit task is: " + JSON.stringify(editedTask))
+    alert("Edit task is: " + JSON.stringify(editedTask) + ". Edited Successfully!")
 
     //tasks[index] = editedTask
-    tasks[index] = editedTask
+    //tasks[index] = editedTask
+
+    dispatch(updateTask({
+      index: index,
+      newData: editedTask
+    }))
 
     setIsEditID(null);
   }
@@ -153,9 +157,15 @@ function HomePage() {
             ) : (
               <TaskReadOnly
                 task={task}
-                deleteTask={() => dispatch(removeTaskFromList({
-                  index: index,
-                }))}
+                deleteTask={() => {
+                  var answer = window.confirm("Are you sure to delete the task?");
+                  if (answer) {
+                    //some code
+                    dispatch(removeTaskFromList({
+                      index: index,
+                    }))
+                  }
+                }}
                 index={index}
                 isDone={(e) => isDone(e, task)}
                 editTask={(e) => editTask(e, task)}
@@ -176,9 +186,15 @@ function HomePage() {
             <TaskCompleted
               task={task}
               index={index}
-              deleteTask={() => dispatch(removeTask({
-                index: index,
-              }))}
+              deleteTask={() => {
+                var answer = window.confirm("Are you sure to delete the task?");
+                if (answer) {
+                  //some code
+                  dispatch(removeTask({
+                    index: index,
+                  }))
+                }
+              }}
             />
           }
         </Fragment>
