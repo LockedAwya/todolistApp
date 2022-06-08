@@ -1,25 +1,24 @@
-import Col from 'react-bootstrap/Col';
+import { ListItem, ListItemText } from '../../../node_modules/@mui/material/index';
+import { AutoDeleteRounded } from '@mui/icons-material';
+import { Tooltip } from '../../../node_modules/@mui/material/index';
 
 function TaskCompleted(props) {
   const task = props.task;
   const deleteTask = props.deleteTask;
   const index = props.index
-
   return (
-    <div>
-      <Col className="border border-primary" md={{ span: -3, offset: 3 }}>
-        <h1>{task.taskName}</h1>
-        <p>
-          {task.taskDescription}
-        </p>
+    <div style={{ 'background-color': 'green' }}>
+      < ListItem >
+        <ListItemText
+          primary={task.taskName}
+          secondary={task.taskDescription}
+        />
         <br />
-        <button onClick={(e) => deleteTask(e, index)}>Delete Task</button>
-        <br />
-        {/* <div id="example-collapse-text">
-          fasdfasdf
-        </div> */}
-      </Col>
-    </div>
+        <Tooltip title="Delete the task">
+          <AutoDeleteRounded onClick={deleteTask}></AutoDeleteRounded>
+        </Tooltip>
+      </ListItem>
+    </div >
   );
 }
 

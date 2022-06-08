@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { TextField, Button } from '@mui/material';
+
 
 function TaskEditable(props) {
   const editTaskChange = props.editTaskChange;
@@ -7,29 +8,34 @@ function TaskEditable(props) {
   const submitChanges = props.submitChanges;
   const index = props.index;
 
-  useEffect(() => {
-    console.log("random lol");
-    console.log("Task is what: " + JSON.stringify(editFormTask))
-  }, [])
-
   return (
-    <div className="border border-primary" md={{ span: 1, offset: 1 }}>
-      <label for="taskName">Task name:</label>
-      <input
-        type="text"
+    <div>
+      <br></br>
+      <TextField
+        label="Task Name"
         name="taskName"
         value={editFormTask.taskName}
         onChange={(e) => editTaskChange(e)}
-      ></input>
-      <label for="taskDescription">Task description:</label>
-      <input
-        type="text"
+        variant="standard"
+      />
+      <br />
+      <TextField
+        label="Task Description"
         name="taskDescription"
         value={editFormTask.taskDescription}
         onChange={(e) => editTaskChange(e)}
-      ></input>
-      <button onClick={(e) => submitChanges(e, index)}>Save changes</button>
-      <button onClick={cancelChanges}>Cancel</button>
+        variant="standard"
+      />
+      <br></br>
+      <div style={{ 'padding-bottom': '2rem;' }}>
+        <Button color="inherit" variant="outlined" size="small" onClick={(e) => submitChanges(e, index)}>
+          Save changes
+        </Button>
+        <Button color="inherit" variant="outlined" size="small" onClick={cancelChanges}>
+          Cancel
+        </Button>
+      </div>
+      <br />
     </div>
   );
 }

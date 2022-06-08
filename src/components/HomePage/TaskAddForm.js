@@ -1,6 +1,4 @@
-import { addTask } from '../../redux/taskList'
-import { useSelector, useDispatch } from "react-redux";
-import {addTaskToList, removeTaskFromList} from '../../redux/taskList'
+import { TextField, Button } from '@mui/material';
 
 function TaskAddForm(props) {
   const addTaskChange = props.addTaskChange
@@ -8,33 +6,28 @@ function TaskAddForm(props) {
   return (
     //Center a div
     <div>
-      <label for="taskname">
-        Task Name:
-      </label>
       <br></br>
-      <input
+      <TextField
+        label="Task Name"
         name="taskName"
-        type="text"
         placeholder="Enter your task name here"
-        onChange={addTaskChange}>
-      </input>
+        onChange={addTaskChange}
+        variant="standard"
+      />
       <br></br>
-      <label for="taskdescription">
-        Task Description:
-      </label>
-      <br></br>
-      <input
+      <TextField
+        label="Task Description"
         name="taskDescription"
-        type="text"
         placeholder="Enter your task description here"
-        onChange={addTaskChange}>
-      </input>
+        onChange={addTaskChange}
+        variant="standard"
+      />
       <br></br>
-      <button
-        onClick={addTask}
-      >
-        Submit task
-      </button>
+      <div style={{ 'padding-bottom': '2rem;' }}>
+        <Button color="inherit" variant="outlined" size="medium" onClick={addTask}>
+          Submit task
+        </Button>
+      </div>
       <br />
     </div>
   );
