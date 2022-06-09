@@ -17,9 +17,6 @@ import Grid from '@mui/material/Grid';
 function HomePage() {
   const tasks = useSelector((state) => state.taskList.items)
   const completedTasks = useSelector((state) => state.tasksCompletedList.items2)
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -129,11 +126,13 @@ function HomePage() {
     dispatch(removeTaskFromList({
       index: index,
     }))
+    alert(JSON.stringify(task))
     dispatch(addTask({
-      id: task.id,
-      taskName: task.taskName,
-      taskDescription: task.taskDescription,
-      taskCompleted: task.taskCompleted,
+      // id: task.id,
+      // taskName: task.taskName,
+      // taskDescription: task.taskDescription,
+      // taskCompleted: task.taskCompleted,
+      task: task
     }))
     //completedTasks.push(task);
   }

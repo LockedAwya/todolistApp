@@ -11,8 +11,8 @@ export const tasksCompletedListSlice = createSlice({
   reducers: {
     addTask: (state, action) => {
       let newTasks = state.items2
-      newTasks.push(action.payload)
-      state.items = newTasks;
+      newTasks.push(action.payload.task)
+      state.items2 = newTasks;
     },
     removeTask: (state, action) => {
       let newTasks = state.items2;
